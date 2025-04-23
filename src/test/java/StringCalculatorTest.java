@@ -20,4 +20,9 @@ public class StringCalculatorTest {
     public void shouldReturnThreeIfSeparatedByACommaDelimiter(){
         assertEquals(3, sc.add("1,2"));
     }
+
+    @Test
+    public void shouldReturnSixIfThreeNumbersArePassed(){
+        assertEquals(6, sc.add("1,2,3"));
+    }
 }

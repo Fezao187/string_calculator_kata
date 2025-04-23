@@ -2,15 +2,19 @@ package org.example.stringCalc;
 
 public class StringCalculator {
     public int add(String numbers){
-       if(numbers.isEmpty()){
-           return 0;
-       } else if (numbers.length()==1) {
-           return Integer.parseInt(numbers);
-       } else if (numbers.contains(",")) {
-           String[] arr = numbers.split(",");
+        if(numbers.isEmpty()){
+            return 0;
+        } else {
+            String[] arrNum = numbers.split(",");
+            return sumOfArr(arrNum);
+        }
+    }
 
-           return Integer.parseInt(arr[0])+Integer.parseInt(arr[1]);
-       }
-        return -1;
+    private int sumOfArr(String[] arr){
+        int sum=0;
+        for(String s: arr){
+            sum += Integer.parseInt(s);
+        }
+        return sum;
     }
 }
