@@ -15,4 +15,7 @@ public class StringCalculatorTest {
     public void shouldReturnOneIfOneIsPassed(){
         assertEquals(1, sc.add("1"));
     }
+
+    @Test
+    public void
 }
