@@ -17,5 +17,7 @@ public class StringCalculatorTest {
     }
 
     @Test
-    public void
+    public void shouldReturnThreeIfSeparatedByACommaDelimiter(){
+        assertEquals(3, sc.add("1,2"));
+    }
 }
