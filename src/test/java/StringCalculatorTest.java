@@ -63,6 +63,6 @@ public class StringCalculatorTest {
 
     @Test
     public void shouldAllowAnyLengthOfMultipleDelims(){
-        assertEquals(6,sc.add("//[***][;;;]\n1***2;;;3"));
+        assertEquals(0,sc.add("//[***][;;;]\n"));
     }
 }

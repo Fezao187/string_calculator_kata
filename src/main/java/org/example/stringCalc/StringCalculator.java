@@ -1,10 +1,14 @@
 package org.example.stringCalc;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class StringCalculator {
     public int add(String numbers){
-        if(numbers.isEmpty()){
+        Matcher matcher = Pattern.compile("-?\\d+")
+                .matcher(numbers);
+        if(!matcher.find()){
             return 0;
         } else {
             String[] arrNum;
