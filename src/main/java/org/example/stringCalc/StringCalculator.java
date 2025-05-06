@@ -1,5 +1,7 @@
 package org.example.stringCalc;
 
+import org.example.stringCalc.NegativesNotAllowedException;
+
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -8,60 +10,53 @@ public class StringCalculator {
     public int add(String numbers){
         Matcher matcher = Pattern.compile("-?\\d+")
                 .matcher(numbers);
-        if(!matcher.find()){
+        if(numbers.isEmpty()){
             return 0;
         } else {
-            String[] arrNum;
             if(numbers.contains("//")){
-                String removeNewLine = numbers.substring(numbers.indexOf("\n")+1);
-                arrNum=removeNewLine.split("["+customDelim(numbers)+"\\n]+");
-            } else {
-                arrNum = numbers.split("[\\,\\n]+");
+                String removeNewLine=numbers.substring(numbers.indexOf("\n")+1);
+                String[] nums= removeNewLine.split("["+customDelim(numbers)+"]+");
+                return addNums(nums);
             }
-            return sumOfArr(arrNum);
+            String[] nums = numbers.split("[,\\n]");
+            return addNums(nums);
         }
     }
 
-    private int sumOfArr(String[] arr){
-        checkNegNum(arr);
-        int sum=0;
-        for(String s: arr){
-            if(Integer.parseInt(s)<1000){
-                sum += Integer.parseInt(s);
+    private int addNums(String[] numbers){
+        ArrayList<Integer> arrList= new ArrayList<>();
+        int sum =0;
+        for(String s: numbers){
+            int num = Integer.parseInt(s);
+            if(num<0){
+                arrList.add(num);
             }
+            if(num<=1000){
+                sum += num;
+            }
+        }
+        if (!arrList.isEmpty()){
+            throw new NegativesNotAllowedException("Negatives not Allowed!", arrList);
         }
         return sum;
     }
 
-    private String customDelim(String number){
-        String delim="";
-        if(number.contains("[")){
-            delim= number.substring(number.indexOf("["),number.lastIndexOf("]"));
-            if(countOcurrences(number,'[')>1){
+    public String customDelim(String numbers){
+        String delim;
+        if(numbers.contains("[")){
+            delim = numbers.substring(numbers.indexOf("[")+1, numbers.lastIndexOf("]"));
+            if(countOccurrences(numbers,'[')>1){
                 String[] customDelims=delim.split("\\]\\[");
-                delim = String.join("|\\",customDelims);
+                delim=String.join("|\\",customDelims);
             }
         } else {
-            delim = number.substring(number.indexOf("/")+2,number.indexOf("\n"));
+            delim = numbers.substring(numbers.indexOf("/")+2,numbers.indexOf("\n"));
         }
+
         return "\\"+delim;
     }
 
-    private void checkNegNum(String[] arr){
-        ArrayList<String> arrList = new ArrayList<>();
-        for(String s: arr){
-            if(s.contains("-")){
-                arrList.add(s);
-            }
-        }
-        if(arrList.size()!=0){
-            String negNum = String.join(", ",arrList);
-            throw new NegativesNotAllowedException("Negatives not allowed",
-                    negNum);
-        }
-    }
-
-    private int countOcurrences(String str, char target){
+    public int countOccurrences(String str, char target){
         int count =0;
         for(int i=0;i<str.length();i++){
             if(str.charAt(i)==target){
