@@ -10,7 +10,7 @@ public class StringCalculator {
     public int add(String numbers){
         Matcher matcher = Pattern.compile("-?\\d+")
                 .matcher(numbers);
-        if(numbers.isEmpty()){
+        if(!matcher.find()){
             return 0;
         } else {
             if(numbers.contains("//")){
